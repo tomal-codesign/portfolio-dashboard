@@ -1,16 +1,20 @@
 // app/(dashboard)/layout.tsx
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Avatar } from "primereact/avatar";
 import { Menubar } from "primereact/menubar";
 import { Badge } from "primereact/badge";
 import Link from "next/link";
+import { Menu } from "primereact/menu";
+import { Button } from "primereact/button";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const [userData, setUserData] = useState<any>({ name: '', email: '', profileImg: '' });
+
+
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -26,31 +30,88 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { label: "Dashboard", href: "/pages/dashboard" },
         { label: "User Management", href: "/pages/user-management" },
     ];
-
+    const menuLeft = useRef<Menu>(null);
+    const menuRight = useRef<Menu>(null);
+    const toast = useRef(null);
+    const items = [
+        {
+            template: () => {
+                return (
+                    <div className="inline-flex items-center gap-4 px-2 py-2">
+                        <img
+                            alt="logo"
+                            src={userData.profileImg}
+                            height="40"
+                            className="rounded-full w-10 h-10"
+                        />
+                        <div className="flex flex-col">
+                            <p className="text-md font-bold">
+                                {userData.name || 'User Name'}
+                            </p><p className="font-medium text-sm">
+                                {userData.email || 'User Email'}
+                            </p>
+                        </div>
+                    </div>
+                );
+            }
+        },
+        {
+            separator: true
+        },
+        {
+            label: 'Profile',
+            icon: 'pi pi-user-edit',
+            command: () => console.log('Profile')
+        },
+        {
+            label: 'Log Out',
+            icon: 'pi pi-sign-out',
+            command: () => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                router.replace("/pages/login");
+            }
+        }
+    ];
 
     return (
         <div className="bg-linear-to-r from-[#98B2E2] to-[#D2E2BF] p-4 min-h-screen">
-            <div className="rounded-full flex justify-between items-center bg-white/50 p-2 rounded-[30px] shadow-lg">
+            <div className=" flex justify-between items-center bg-white/50 p-2 rounded-[30px] shadow-lg">
                 <div className="flex items-center gap-2">
-                    <img alt="logo" src={userData.profileImg} height="40" className="rounded-full w-10 h-10"></img>
-                    <span className="font-semibold text-gray-900">{userData.name}</span>
+                    <Avatar icon="pi pi-objects-column" className="!w-[40px] !h-[40px]" style={{ backgroundColor: '#2196F3', color: '#ffffff' }} shape="circle" />
+                    <span className="font-semibold text-gray-900">Portfolio</span>
                 </div>
                 <div>
                     <nav>
-                        <ul>
-                            <li>
-                                {navItems.map((item, index) => (
-                                    <Link href={item.href} key={index} className={`px-5 py-2 rounded-full text-sm font-medium text-gray-900 hover:bg-gray-50`}>
-                                        <span className="text-gray-900 font-semibold">{item.label}</span>
+                        <ul className="flex items-center gap-2">
+                            {navItems.map((item, index) => (
+                                <li key={index}>
+                                    <Link href={item.href} key={index} className={`px-5 py-3 rounded-full text-[15px] text-gray-900  ${pathname === item.href ? 'bg-[#3E84DE] text-white' : 'hover:bg-white/40'}`}>
+                                        {item.label}
                                     </Link>
-                                ))
-                                }
-                            </li>
+                                </li>
+                            ))
+                            }
                         </ul>
                     </nav>
                 </div>
                 <div className="flex items-center gap-2">
-                    <img alt="logo" src={userData.profileImg} height="40" className="rounded-full w-10 h-10"></img>
+                    <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+                    <button
+                        type="button"
+                        className="transition-colors cursor-pointer"
+                        onClick={(event) => menuRight.current?.toggle(event)}
+                        aria-controls="popup_menu"
+                        aria-haspopup
+                    >
+                        <img
+                            alt="logo"
+                            src={userData.profileImg || 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
+                            height="40"
+                            className="rounded-full w-10 h-10"
+                        />
+                    </button>
+                    {/* <Button label="Show Right" icon="pi pi-align-right" className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup /> */}
                 </div>
             </div>
             <div className="mt-4">

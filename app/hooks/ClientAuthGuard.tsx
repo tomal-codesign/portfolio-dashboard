@@ -3,6 +3,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { isTokenExpired } from "./isTokenExpired";
 
 interface ClientAuthGuardProps {
     children: React.ReactNode;
@@ -20,6 +21,9 @@ export const ClientAuthGuard = ({ children }: ClientAuthGuardProps) => {
             router.replace("/pages/login");
         } else if (token && pathname.startsWith("/pages/login")) {
             router.replace("/pages/dashboard");
+        } else if (token && isTokenExpired(token)) {
+            localStorage.removeItem("token");
+            router.replace("/pages/login"); // ✅ fix here
         } else {
             setIsAuthChecked(true);
         }
