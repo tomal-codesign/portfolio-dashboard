@@ -3,12 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Avatar } from "primereact/avatar";
-import { Menubar } from "primereact/menubar";
-import { Badge } from "primereact/badge";
 import Link from "next/link";
 import { Menu } from "primereact/menu";
-import { Button } from "primereact/button";
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
@@ -30,9 +26,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { label: "Dashboard", href: "/pages/dashboard" },
         { label: "User Management", href: "/pages/user-management" },
     ];
-    const menuLeft = useRef<Menu>(null);
     const menuRight = useRef<Menu>(null);
-    const toast = useRef(null);
     const items = [
         {
             template: () => {

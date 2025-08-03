@@ -23,7 +23,7 @@ const DynamicInput = ({ label, placeholder, type = "text", icon = 'pi-user', val
         <div className='absolute left-2 top-[50%] translate-y-[-50%] bg-[#e1e1e1] rounded-full w-8 h-8 flex items-center justify-center'>
           <i className={`pi ${icon}  text-gray-500`}></i>
         </div>
-        <InputText {...register(name)} type={type} className='w-full !rounded-full h-full !pl-[50px] !bg-[#FFFFFF]/60 border !border-[#D8D9DB] !text-sm' placeholder={placeholder} value={value} onChange={onChange} />
+        <InputText {...register(name)} type={type} className={`w-full !rounded-full h-full !pl-[50px] !bg-[#FFFFFF]/60 border !border-[#D8D9DB] !text-sm ${error ? '!border-red-500' : ''}`} placeholder={placeholder} value={value} onChange={onChange} />
       </div>
       {error && (
         <p className="text-red-500 text-sm pl-2">{error}</p>
