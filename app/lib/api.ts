@@ -3,7 +3,7 @@ import axios from "axios";
 
 const api = axios.create({
     // live server
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://backend-portfilo.vercel.app/api",
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "https://backend-portfilo.vercel.app/api",
     // local server
     // baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api",
     headers: {
