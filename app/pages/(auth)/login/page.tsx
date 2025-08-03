@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const userSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Invalid email format"),
+  email: z.string().min(1, "Email is required").email({ message: "Invalid email address" }),
   password: z.string().min(1, "Password is required"),
 });
 
