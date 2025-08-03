@@ -10,7 +10,7 @@ import { useToast } from "../../../component/reusable-component/ToastProvider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const userSchema = z.object({
+const userSchema = z.object({
   email: z.string().min(1, "Email is required").email({ message: "Invalid email address" }),
   password: z.string().min(1, "Password is required"),
 });
