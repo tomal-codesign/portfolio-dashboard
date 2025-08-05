@@ -7,14 +7,15 @@ import { UserService } from '../../../services/userService';
 import { User } from '@/app/types/user';
 import { Skeleton } from 'primereact/skeleton';
 import { useToast } from '@/app/component/reusable-component/ToastProvider';
-import { Dialog } from 'primereact/dialog';
 import DynamicModal from '@/app/component/reusable-component/DynamicModal';
 import DynamicInputField from '@/app/component/reusable-component/DynamicInputField';
 import { FormProvider, useForm } from 'react-hook-form';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { is } from 'zod/v4/locales';
 import { confirmDialog, ConfirmDialog } from 'primereact/confirmdialog';
+import { RoleService } from '@/app/services/roleServices';
+import { Roles } from '@/app/types/role';
+import DynamicDropdown from '@/app/component/reusable-component/DynamicDropdown';
 
 const userSchema = z.object({
     id: z.number().optional(),
@@ -22,6 +23,7 @@ const userSchema = z.object({
     email: z.string().min(1, "Email is required").email({ message: "Invalid email address" }),
     password: z.string().min(1, "Password is required"),
     profileImg: z.string().optional(),
+    roleId: z.number().min(1, "Role is required"),
 });
 
 type LoginForm = z.infer<typeof userSchema>;
@@ -30,6 +32,7 @@ const page = () => {
     const [loading, setLoading] = useState(false);
     const [loadingCreate, setLoadingCreate] = useState(false);
     const [user, setUser] = useState<User[]>();
+    const [role, setRole] = useState<Roles[]>();
     const toast = useToast();
     const [visible, setVisible] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -41,6 +44,18 @@ const page = () => {
     });
 
     const { handleSubmit, reset } = methods;
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await RoleService.getRole();
+                setRole(data.roles);
+            } catch (error: any) {
+                console.error('Failed to fetch Role:', error);
+                toast.current?.show({ severity: "error", summary: "Failed to fetch Role", detail: error.response.data.error, life: 3000 });
+            }
+        })();
+    }, [])
 
     useEffect(() => {
         (async () => {
@@ -137,6 +152,15 @@ const page = () => {
             </div>
         );
     };
+    const profileImgBodyTemplate = (rowData: any) => {
+        return (
+            <div className='flex items-center gap-2'>
+                <img src={rowData.profileImg} alt="Profile" className="w-10 h-10 rounded-full" />
+                <span>{rowData.name}</span>
+            </div>
+        );
+    }
+
     return (
         <div className='custom-spotlight-card bg-white/40 p-[20px] border border-[#fff]/80 rounded-[26px] backdrop-blur-lg'>
             <div className='flex justify-between items-center mb-4'>
@@ -151,10 +175,10 @@ const page = () => {
             <div className='mt-4'>
                 <DataTable value={loading ? skeletonUsers : user} showGridlines tableStyle={{ minWidth: '50rem' }} responsiveLayout="scroll" className='rounded-2xl overflow-hidden'>
                     <Column field="sl" header="SL" body={(rowData) => loading ? <Skeleton /> : rowData.sl} ></Column>
-                    <Column field="name" header="Name" body={(rowData) => loading ? <Skeleton /> : rowData.name} ></Column>
+                    <Column field="name" header="Name" body={(rowData) => loading ? <Skeleton /> : profileImgBodyTemplate(rowData)} ></Column>
                     <Column field="email" header="Email" body={(rowData) => loading ? <Skeleton /> : rowData.email}></Column>
                     <Column field="password" header="Password" body={(rowData) => loading ? <Skeleton /> : rowData.password}></Column>
-                    <Column field="profileImg" header="Profile Image URL" body={(rowData) => loading ? <Skeleton /> : rowData.profileImg} ></Column>
+                    <Column field="roleName" header="Role" body={(rowData) => loading ? <Skeleton /> : rowData.roleName}></Column>
                     <Column header="Actions" body={loading ? <Skeleton /> : actionBodyTemplate} style={{ width: '120px', height: '40px' }} />
 
                 </DataTable>
@@ -164,6 +188,7 @@ const page = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-3'>
                         <DynamicInputField label="Name" placeholder="Name***" name="name" />
                         <DynamicInputField label="Profile Image URL" placeholder="Profile image URL" name="profileImg" />
+                        <DynamicDropdown label="Role" placeholder="Role***" name="roleId" options={role || []} />
                         <DynamicInputField label="Email" placeholder="Email***" name="email" />
                         <DynamicInputField label="password" placeholder="Password***" name="password" />
                         <Button loading={loadingCreate} type="submit" label={isEdit ? 'Update User' : 'Add User'} className="!bg-blue-500/20 !text-blue-500 !border-none hover:!bg-blue-500 hover:!text-white !mt-3" />

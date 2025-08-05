@@ -37,3 +37,7 @@ body {
   padding: 1rem;
   font-size: 14px;
 }
+
+.p-dropdown-label {
+  font-size: .875rem;
+}

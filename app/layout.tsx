@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { PrimeReactProvider } from "primereact/api";
 import { ToastProvider } from "./component/reusable-component/ToastProvider";
 import "./globals.css";
-import { ClientAuthGuard } from "./hooks/ClientAuthGuard";
+import { ClientAuthGuard } from "./lib/ClientAuthGuard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
