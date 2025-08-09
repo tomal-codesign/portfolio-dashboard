@@ -9,6 +9,7 @@ import { authService } from "../../../services/authService";
 import { useToast } from "../../../component/reusable-component/ToastProvider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 const userSchema = z.object({
   email: z.string().min(1, "Email is required").email({ message: "Invalid email address" }),
@@ -35,7 +36,12 @@ export default function Home() {
       const res = await authService.login(data);
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
-      router.replace("/pages/dashboard");
+
+      // Save to cookies (middleware use)
+      Cookies.set("token", res.token, { path: "/" });
+      Cookies.set("user", JSON.stringify(res.user), { path: "/" });
+
+      router.push("/pages/dashboard");
     } catch (error: any) {
       console.log(error.response.data);
       toast.current?.show({ severity: "error", summary: "Login Failed", detail: error.response.data.error, life: 3000 });

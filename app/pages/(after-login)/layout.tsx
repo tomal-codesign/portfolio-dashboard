@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Avatar } from "primereact/avatar";
 import Link from "next/link";
 import { Menu } from "primereact/menu";
+import Cookies from "js-cookie";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
@@ -23,8 +24,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }, [pathname]);
 
     const navItems = [
-        { label: "Dashboard", href: "/pages/dashboard" },
-        { label: "User Management", href: "/pages/user-management" },
+        { label: "Dashboard", href: "/pages/dashboard", roles: ["Admin", "User"] },
+        { label: "User Management", href: "/pages/user-management", roles: ["Admin"] },
+        { label: "Reports", href: "/pages/reports", roles: ["Admin"] },
     ];
     const menuRight = useRef<Menu>(null);
     const items = [
@@ -63,6 +65,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             command: () => {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+
+                Cookies.remove("token");
+                Cookies.remove("user");
+
                 router.replace("/pages/login");
             }
         }
@@ -78,7 +84,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <div>
                     <nav>
                         <ul className="flex items-center gap-2">
-                            {navItems.map((item, index) => (
+                            {userData && navItems.filter((item) => item.roles.includes(userData.roleName)).map((item, index) => (
                                 <li key={index}>
                                     <Link href={item.href} key={index} className={`px-5 py-3 rounded-full text-[15px] text-gray-900  ${pathname === item.href ? 'bg-[#3E84DE] text-white' : 'hover:bg-white/40'}`}>
                                         {item.label}
