@@ -3,18 +3,18 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const roleAccessMap: Record<string, string[]> = {
-    "/pages/dashboard": ["user", "admin"],
-    "/pages/user-management": ["admin"],
-    "/pages/reports": ["admin"]
+    "/pages/dahsboard": ["User", "Admin"],
+    "/pages/user-management": ["Admin"],
+    "/pages/reports": ["Admin"]
 };
 
 function canAccessRoute(pathname: string, role: string): boolean {
     for (const routePrefix in roleAccessMap) {
         if (pathname.startsWith(routePrefix)) {
-            return roleAccessMap[routePrefix].includes(role.toLowerCase());
+            return roleAccessMap[routePrefix].includes(role);
         }
     }
-    return true; // no restriction by default
+    return true;
 }
 
 export function middleware(req: NextRequest) {
@@ -24,7 +24,7 @@ export function middleware(req: NextRequest) {
     const userStr = req.cookies.get("user")?.value;
 
     // Parse user cookie if it exists
-    let user: { role: string } | null = null;
+    let user: { roleName: string } | null = null;
     try {
         user = userStr ? JSON.parse(decodeURIComponent(userStr)) : null;
     } catch {
@@ -42,7 +42,7 @@ export function middleware(req: NextRequest) {
     }
 
     // ✅ Role-based access check
-    if (user?.role && !canAccessRoute(pathname, user.role)) {
+    if (user?.roleName && !canAccessRoute(pathname, user.roleName)) {
         return NextResponse.redirect(new URL("/pages/unauthorized", req.url));
     }
 

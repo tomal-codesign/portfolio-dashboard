@@ -15,7 +15,7 @@ export default function UnauthorizedPage() {
                     You do not have permission to view this page.
                 </p>
                 <Link href="/pages/dashboard">
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-full transition duration-300">
+                    <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-full transition duration-300 cursor-pointer">
                         Go Back to Dashboard
                     </button>
                 </Link>
