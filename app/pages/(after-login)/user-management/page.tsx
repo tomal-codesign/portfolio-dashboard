@@ -190,7 +190,7 @@ const page = () => {
                         <DynamicInputField label="Profile Image URL" placeholder="Profile image URL" name="profileImg" />
                         <DynamicDropdown label="Role" placeholder="Role***" name="roleId" options={role || []} />
                         <DynamicInputField label="Email" placeholder="Email***" name="email" />
-                        <DynamicInputField label="password" placeholder="Password***" name="password" />
+                        <DynamicInputField label="Password" placeholder="Password***" name="password" />
                         <Button loading={loadingCreate} type="submit" label={isEdit ? 'Update User' : 'Add User'} className="!bg-blue-500/20 !text-blue-500 !border-none hover:!bg-blue-500 hover:!text-white !mt-3" />
                     </form>
                 </FormProvider>

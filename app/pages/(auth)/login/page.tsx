@@ -41,7 +41,7 @@ export default function Home() {
       Cookies.set("token", res.token, { path: "/" });
       Cookies.set("user", JSON.stringify(res.user), { path: "/" });
 
-      router.push("/pages/dashboard");
+      router.replace("/pages/dashboard");
     } catch (error: any) {
       console.log(error.response.data);
       toast.current?.show({ severity: "error", summary: "Login Failed", detail: error.response.data.error, life: 3000 });
