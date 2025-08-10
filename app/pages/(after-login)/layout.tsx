@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const navItems = [
         { label: "Dashboard", href: "/pages/dashboard", roles: ["Admin", "User"] },
         { label: "User Management", href: "/pages/user-management", roles: ["Admin"] },
-        { label: "Reports", href: "/pages/reports", roles: ["Admin"] },
+        { label: "Portfolio", href: "/pages/portfolio", roles: ["Admin", "User"] },
     ];
     const menuRight = useRef<Menu>(null);
     const items = [
@@ -75,8 +75,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     ];
 
     return (
-        <div className="bg-linear-to-r from-[#98B2E2] to-[#D2E2BF] p-4 min-h-screen">
-            <div className=" flex justify-between items-center bg-white/50 p-2 rounded-[30px] shadow-lg">
+        <div className="bg-linear-to-r from-[#98B2E2] to-[#D2E2BF]  p-4 min-h-screen">
+            <div className=" flex justify-between items-center bg-white/50 p-2 rounded-[30px] shadow-lg border border-[#fff]/80">
                 <div className="flex items-center gap-2">
                     <Avatar icon="pi pi-objects-column" className="!w-[40px] !h-[40px]" style={{ backgroundColor: '#2196F3', color: '#ffffff' }} shape="circle" />
                     <span className="font-semibold text-gray-900">Portfolio</span>

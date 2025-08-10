@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 const roleAccessMap: Record<string, string[]> = {
     "/pages/dahsboard": ["User", "Admin"],
     "/pages/user-management": ["Admin"],
-    "/pages/reports": ["Admin"]
+    "/pages/portfolio": ["User", "Admin"]
 };
 
 function canAccessRoute(pathname: string, role: string): boolean {
