@@ -46,7 +46,7 @@ const portfolio = () => {
                 </div>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                {portfolio.map((item, index) => (
+                {portfolio.length !== 0 ? portfolio.map((item, index) => (
                     <div key={index} className='overflow-hidden relative custom-spotlight-card p-4 bg-white/40 border border-[#fff]/80 rounded-[26px] backdrop-blur-lg group' >
                         <div className='h-[200px] lg:h-[330px] overflow-hidden rounded-[20px] group relative'>
                             <Image className='object-cover w-full h-full ease-in duration-400' src={item.imageUrl} width={800} height={600} alt="Image" />
@@ -64,7 +64,16 @@ const portfolio = () => {
                             <p className='text-gray-600 mt-1'>{item.description}</p>
                         </div>
                     </div>
-                ))}
+                )) :
+                    <div className='col-span-3 flex items-center justify-center'>
+                        <div className="w-full max-w-md rounded-xl p-6">
+                            <div className="h-72 flex flex-col items-center justify-center text-center text-gray-500">
+                                <Icon icon="iconamoon:box-thin" width="40" height="40" />
+                                <p className="text-md font-medium">No Data Found</p>
+                            </div>
+                        </div>
+                    </div>}
+
             </div>
         </div>
     )

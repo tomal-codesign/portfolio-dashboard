@@ -55,7 +55,7 @@ export default function Home() {
       <div className="bg-white/50 p-10 rounded-[30px] shadow-lg w-110">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Welcome to Portfolio</h1>
-          <p className="text-[#667085] mt-2 text-md">Let's get started with Portfolio Dashboard</p>
+          <p className="text-[#667085] mt-2 text-md">Let's get started with portfolio Dashboard</p>
         </div>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} >
