@@ -1,8 +1,8 @@
 export interface portfolioResponse {
     message: string
-    portfolios: portfolio[]
+    portfolios: portfolioData[]
 }
-export interface portfolio {
+export interface portfolioData {
     id: number
     title: string,
     description: string,

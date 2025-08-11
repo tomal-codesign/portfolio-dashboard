@@ -3,7 +3,7 @@ import { Button } from 'primereact/button'
 import React, { useEffect } from 'react'
 import Image from 'next/image'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { portfolioData } from '@/app/types/portfolio'
+import { portfolioData } from '@/app/types/portfolioData'
 import { PortfolioService } from '@/app/services/portfolioService'
 import { useToast } from '@/app/component/reusable-component/ToastProvider'
 
