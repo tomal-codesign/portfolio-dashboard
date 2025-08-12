@@ -41,3 +41,28 @@ body {
 .p-dropdown-label {
   font-size: .875rem;
 }
+
+.common-modal .p-dialog-header {
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
+}
+
+.common-modal .p-dialog-content {
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
+}
+
+.p-confirm-dialog {
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.p-confirm-dialog .p-confirm-dialog-accept {
+  border-radius: 26px;
+  padding: 10px 36px;
+}
+
+.p-confirm-dialog .p-confirm-dialog-reject {
+  border-radius: 26px;
+  padding: 10px 36px;
+}

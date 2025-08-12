@@ -4,7 +4,7 @@ export interface userResponse {
     users: User[];
 }
 export interface User {
-    id: string;
+    id: number;
     name: string;
     email: string;
     password: string;

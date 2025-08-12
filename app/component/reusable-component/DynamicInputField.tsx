@@ -16,10 +16,10 @@ const DynamicInputField = ({ label, placeholder, type = "text", value, name, onC
   const error = errors[name]?.message as string | undefined;
 
   return (
-    <div className='flex flex-col gap-1'>
-      {label && <label className=' text-gray-800 text-md'>{label}</label>}
+    <div className='flex flex-col gap-2'>
+      {label && <label className='pl-3 text-gray-800 text-md'>{label}</label>}
       <div className='relative h-12 rounded-full'>
-        <InputText {...register(name)} type={type} className={`w-full !rounded-lg h-full !bg-gray-100/60 border !border-[#D8D9DB] !text-sm ${error ? '!border-red-500' : ''}`} placeholder={placeholder} value={value} onChange={onChange} />
+        <InputText {...register(name)} type={type} className={`w-full !pl-4 !rounded-full h-full !bg-gray-100/60 border !border-[#D8D9DB] !text-sm ${error ? '!border-red-500' : ''}`} placeholder={placeholder} value={value} onChange={onChange} />
       </div>
       {error && (
         <p className="text-red-500 text-sm pl-2">{error}</p>

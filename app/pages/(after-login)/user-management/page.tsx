@@ -169,7 +169,18 @@ const page = () => {
                     <p className='text-gray-600 mt-1'>Manage your users effectively with our user management system.</p>
                 </div>
                 <div>
-                    <Button label="Add User" icon="pi pi-plus" className="p-button-success !text-blue-500 !bg-white hover:!bg-blue-500 hover:!text-white !border-none !text-sm !px-4 !py-3 !font-normal mt-3" onClick={() => setVisible(true)} />
+                    <Button label="Add User" icon="pi pi-plus" className="!rounded-full p-button-success !text-blue-500 !bg-white hover:!bg-blue-500 hover:!text-white !border-none !text-sm !px-4 !py-3 !font-normal mt-3"
+                        onClick={() => {
+                            setIsEdit(false)
+                            setVisible(true)
+                            reset({
+                                id: undefined,
+                                name: '',
+                                email: '',
+                                password: '',
+                                profileImg: '',
+                            })
+                        }} />
                 </div>
             </div>
             <div className='mt-4'>
@@ -180,7 +191,6 @@ const page = () => {
                     <Column field="password" header="Password" body={(rowData) => loading ? <Skeleton /> : rowData.password}></Column>
                     <Column field="roleName" header="Role" body={(rowData) => loading ? <Skeleton /> : rowData.roleName}></Column>
                     <Column header="Actions" body={loading ? <Skeleton /> : actionBodyTemplate} style={{ width: '120px', height: '40px' }} />
-
                 </DataTable>
             </div>
             <DynamicModal header={isEdit ? 'Edit User' : 'Add User'} isvisible={visible} onHide={() => setVisible(false)}>
@@ -191,7 +201,7 @@ const page = () => {
                         <DynamicDropdown label="Role" placeholder="Role***" name="roleId" options={role || []} />
                         <DynamicInputField label="Email" placeholder="Email***" name="email" />
                         <DynamicInputField label="Password" placeholder="Password***" name="password" />
-                        <Button loading={loadingCreate} type="submit" label={isEdit ? 'Update User' : 'Add User'} className="!bg-blue-500/20 !text-blue-500 !border-none hover:!bg-blue-500 hover:!text-white !mt-3" />
+                        <Button loading={loadingCreate} type="submit" label={isEdit ? 'Update User' : 'Add User'} className=" !rounded-full !bg-blue-500/20 !text-blue-500 !border-none hover:!bg-blue-500 hover:!text-white !mt-3" />
                     </form>
                 </FormProvider>
             </DynamicModal>

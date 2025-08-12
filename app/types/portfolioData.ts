@@ -3,7 +3,7 @@ export interface portfolioResponse {
     portfolios: portfolioData[]
 }
 export interface portfolioData {
-    id: number
+    id?: number
     title: string,
     description: string,
     imageUrl: string,

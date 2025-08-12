@@ -14,7 +14,7 @@ const DynamicModal = ({ children, isvisible, header, onHide }: Props) => {
             header={header}
             visible={isvisible}
             position="top"
-            style={{ width: '50vw' }}
+            className='lg:w-[650px] w-[80%] !rounded-[26px] common-modal'
             onHide={onHide}
         >
             {children}
