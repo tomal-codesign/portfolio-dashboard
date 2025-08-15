@@ -28,6 +28,7 @@ const Portfolio = () => {
     const [editLoading, setEditLoading] = useState(false);
     const [userData, setUserData] = useState<User>();
     const [isCopied, setIsCopied] = useState(false);
+    const [isCopied2, setIsCopied2] = useState(false);
     const [img, setImg] = useState("");
     const toast = useToast();
 
@@ -66,6 +67,13 @@ const Portfolio = () => {
             setTimeout(() => setIsCopied(false), 3000);
         });
     };
+    const copyToClipboard2 = () => {
+        const text = `https://backend-portfilo.vercel.app/api/public/portfolio/"portfolioId"`;
+        navigator.clipboard.writeText(text).then(() => {
+            setIsCopied2(true);
+            setTimeout(() => setIsCopied2(false), 3000);
+        });
+    };
 
     const onSubmit = async (data: LoginForm) => {
         setEditLoading(true);
@@ -88,12 +96,19 @@ const Portfolio = () => {
                 <h1 className='text-xl font-semibold text-gray-800'>Profile</h1>
                 <p className='text-gray-600'>You can update your profile information here.</p>
 
-                <h2 className='text-lg font-medium text-gray-800 mt-4 mb-2'>Your Portfolio Api Link</h2>
+                <h2 className='text-lg font-medium text-gray-800 mt-4 mb-2'>All Portfolio Api Link</h2>
                 <div className='p-3 text-gray-800 text-md font-medium bg-emerald-600/20 rounded-full flex justify-between items-center '>
                     <span className='pl-2 '>
                         https://backend-portfilo.vercel.app/api/public/portfolios/{userData?.id}
                     </span>
                     <Button icon={`pi ${isCopied ? 'pi-check' : 'pi-copy'}`} onClick={copyToClipboard} tooltip={isCopied ? 'Copied' : 'Copy'} className="p-button-sm p-button-rounded p-button-text !text-blue-500 !bg-white/60 !w-9 !h-9 hover:!bg-blue-500 hover:!text-white" />
+                </div>
+                <h2 className='text-lg font-medium text-gray-800 mt-4 mb-2'>Single Portfolio Api Link</h2>
+                <div className='p-3 text-gray-800 text-md font-medium bg-emerald-600/20 rounded-full flex justify-between items-center '>
+                    <span className='pl-2 '>
+                        https://backend-portfilo.vercel.app/api/public/portfolio/"portfolioId"
+                    </span>
+                    <Button icon={`pi ${isCopied2 ? 'pi-check' : 'pi-copy'}`} onClick={copyToClipboard2} tooltip={isCopied2 ? 'Copied' : 'Copy'} className="p-button-sm p-button-rounded p-button-text !text-blue-500 !bg-white/60 !w-9 !h-9 hover:!bg-blue-500 hover:!text-white" />
                 </div>
                 <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-3 mt-5'>
