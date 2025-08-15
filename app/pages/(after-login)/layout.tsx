@@ -6,21 +6,29 @@ import { Avatar } from "primereact/avatar";
 import Link from "next/link";
 import { Menu } from "primereact/menu";
 import Cookies from "js-cookie";
+import { UserService } from "@/app/services/userService";
+import { useToast } from "@/app/component/reusable-component/ToastProvider";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const [userData, setUserData] = useState<any>({ name: '', email: '', profileImg: '' });
-
-
-
+    const toast = useToast();
     useEffect(() => {
         const token = localStorage.getItem("token");
         const user = localStorage.getItem("user");
-        setUserData(user ? JSON.parse(user) : null);
+        const userData = user ? JSON.parse(user) : null;
+        (async () => {
+            try {
+                const data = await UserService.getUserById(userData.id.toString());
+                setUserData(data.user);
+            } catch (error: any) {
+                console.error('Failed to fetch user:', error);
+                toast.current?.show({ severity: "error", summary: "Failed to fetch user", detail: error.response.data.error, life: 3000 });
+            }
+        })();
         if (!token) {
             router.replace("/login");
         }
-
     }, [pathname]);
 
     const navItems = [
