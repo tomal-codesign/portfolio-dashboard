@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {
             label: 'Profile',
             icon: 'pi pi-user-edit',
-            command: () => console.log('Profile')
+            command: () => router.replace("/pages/profile")
         },
         {
             label: 'Log Out',
@@ -104,7 +104,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </nav>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+                    <Menu className="!w-fit" model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
                     <button
                         type="button"
                         className="transition-colors cursor-pointer"
